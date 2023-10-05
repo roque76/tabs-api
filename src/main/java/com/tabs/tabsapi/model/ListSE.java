@@ -1,5 +1,6 @@
 package com.tabs.tabsapi.model;
 
+import com.tabs.tabsapi.exceptions.KidsException;
 import lombok.Data;
 
 @Data
@@ -9,7 +10,7 @@ public class ListSE {
 
 
     public void addKidToFinal(Kid newkid) {
-        Node new_node = new Node( newkid);
+        Node new_node = new Node(newkid);
         if (this.head == null) {
             this.head = new_node;
         } else {
@@ -22,16 +23,85 @@ public class ListSE {
         }
     }
 
-    public void addToStart(Kid newKid){
-        if(this.head ==null){
+    public void addToStart(Kid newKid) {
+        if (this.head == null) {
             //No hay datos
             this.head = new Node(newKid);
-        }
-        else{
+        } else {
             Node newNode = new Node(newKid);
             newNode.setNext(this.head);
             this.head = newNode;
         }
-        this.size ++;
+        this.size++;
     }
+
+    public void invertList() {
+        if (this.head != null) {
+            ListSE listCopy = new ListSE();
+            Node temp = this.head;
+            while (temp != null) {
+                listCopy.addToStart(temp.getData());
+                temp = temp.getNext();
+            }
+            this.head = listCopy.getHead();
+        }
+    }
+
+    public void invertEdges() {
+        if (this.head != null) {
+            Node temp = this.head;
+            Kid firstKid = this.head.getData();
+            while (temp.getNext() != null) {
+                temp = temp.getNext();
+            }
+            Kid lastKid = temp.getData();
+            temp.setData(this.head.getData());
+            this.head.setData(lastKid);
+        }
+    }
+
+    public void intercalateByGender() {
+
+    }
+
+    public void updateInPos(int pos, Kid kid) {
+        if (this.head != null) {
+            Node temp = this.head;
+
+            byte currentPos = 1;
+            if (pos > this.size) {
+                this.addKidToFinal(kid);
+            }
+            while (temp.getNext() != null) {
+                if (currentPos == pos) {
+                    temp.setData(kid);
+                }
+                temp = temp.getNext();
+                currentPos++;
+            }
+        }
+    }
+
+    public void deleteInPos(int pos) throws KidsException {
+        if (pos < 0 || pos > size) {
+            throw new KidsException("Fuera de rango");
+        }
+        if (pos == 0) {
+            head = head.getNext();
+        } else {
+            Node temp = head;
+            int cont = 0;
+
+            while (cont < pos - 1) {
+                temp = temp.getNext();
+                cont++;
+            }
+
+            temp.setNext(temp.getNext().getNext());
+        }
+
+        size--;
+    }
+
+
 }
