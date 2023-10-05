@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 
 public class Node {
-    private Node next;
     private Kid data;
+    private Node next;
 
     public Node(Kid data) {
         this.data = data;

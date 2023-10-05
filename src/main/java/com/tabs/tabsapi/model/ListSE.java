@@ -3,6 +3,9 @@ package com.tabs.tabsapi.model;
 import com.tabs.tabsapi.exceptions.KidsException;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 public class ListSE {
     private Node head;
@@ -101,6 +104,37 @@ public class ListSE {
         }
 
         size--;
+    }
+
+
+    public void insertInPos(int pos, Kid kid) {
+        if (pos == 1) {
+            this.addToStart(kid);
+            this.size++;
+
+        } else if (pos > this.size) {
+            this.addKidToFinal(kid);
+            this.size++;
+
+        } else if (pos<=this.size) {
+            Node temp = this.head;
+            int posAct = 1;
+            while (posAct < pos - 1) {
+                temp = temp.getNext();
+                posAct++;
+            }
+            Node newNode = new Node(kid);
+            newNode.setNext(temp.getNext());
+            temp.setNext(newNode);
+            this.size++;
+
+        }
+    }
+
+    public void deleteById(String id){
+        if(this.head==null){
+
+        }
     }
 
 

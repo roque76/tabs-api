@@ -22,6 +22,8 @@ public class ListSEService {
                 ,"Male", (byte) 18));
         kids.addKidToFinal(new Kid("4554544554","Sergio Núñez"
                 ,"Male", (byte) 19));
+        kids.addKidToFinal(new Kid("1056122169","John Jaime Madrid",
+                "Male",(byte)18));
 
     }
     public String invert(){
@@ -46,6 +48,11 @@ public class ListSEService {
         } catch (KidsException e) {
             return e.getMessage();
         }
+    }
+
+    public String insertInPos(int pos, Kid kid){
+        kids.insertInPos(pos,kid);
+        return "Adicionado";
     }
 
 

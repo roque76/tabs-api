@@ -1,11 +1,8 @@
 package com.tabs.tabsapi.controller;
 
 import com.tabs.tabsapi.controller.dto.ResponseDTO;
-import com.tabs.tabsapi.exceptions.KidsException;
 import com.tabs.tabsapi.model.Kid;
-import com.tabs.tabsapi.model.ListSE;
 import com.tabs.tabsapi.service.ListSEService;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path="/listse")
-public class LIstSEController {
+public class ListSEController {
 
     @Autowired
     private ListSEService listSEService;
@@ -56,9 +53,15 @@ public class LIstSEController {
     }
 
     @PutMapping(path = "/updateinpos/{pos}")
-    public ResponseEntity<ResponseDTO> insertInPos(@PathVariable byte pos, @RequestBody Kid kid){
+    public ResponseEntity<ResponseDTO> updateInPos(@PathVariable byte pos, @RequestBody Kid kid){
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
                 listSEService.updateInPos(pos,kid),null),HttpStatus.OK);
+    }
+
+    @PostMapping(path = "insertinpos/{pos}")
+    public ResponseEntity<ResponseDTO> insertInPos(@PathVariable int pos,@RequestBody Kid kid){
+        return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
+                listSEService.insertInPos(pos,kid),null),HttpStatus.OK);
     }
 
 }
