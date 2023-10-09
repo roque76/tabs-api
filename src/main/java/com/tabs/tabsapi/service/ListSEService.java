@@ -55,6 +55,32 @@ public class ListSEService {
         return "Adicionado";
     }
 
+    public String addToEnd(Kid kid){
+        kids.addKidToFinal(kid);
+        return "Adicionado";
+    }
 
+    public String addToStart(Kid kid){
+        kids.addToStart(kid);
+        return "Adicionado";
+    }
+
+    public String deleteById(String id){
+        try {
+            kids.deleteById(id);
+            return "Insertado";
+        } catch (KidsException e) {
+            return e.getMessage();
+        }
+    }
+
+    public String intercalateByGender(){
+        try{
+            kids.intercalateByGender();
+            return "Intercalado";
+        }catch (KidsException e){
+            return e.getMessage();
+        }
+    }
 
 }

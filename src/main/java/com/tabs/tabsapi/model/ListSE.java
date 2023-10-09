@@ -53,7 +53,6 @@ public class ListSE {
     public void invertEdges() {
         if (this.head != null) {
             Node temp = this.head;
-            Kid firstKid = this.head.getData();
             while (temp.getNext() != null) {
                 temp = temp.getNext();
             }
@@ -63,8 +62,29 @@ public class ListSE {
         }
     }
 
-    public void intercalateByGender() {
-
+    public void intercalateByGender() throws KidsException{
+        if(this.head == null){
+            throw new KidsException("Lista vacia");
+        } else if (this.head.getNext()==null) {
+            throw new KidsException("Insuficientes elementos");
+        }
+        else{
+            ListSE listCopy = new ListSE();
+            Node temp = this.head;
+            int posMale = 1;
+            int posFemale = 2;
+            while(temp!= null){
+                if(temp.getData().getGender().equals("Male")){
+                    listCopy.insertInPos(posMale,temp.getData());
+                    posMale = posMale+2;
+                } else if (temp.getData().getGender().equals("Female")) {
+                    listCopy.insertInPos(posFemale,temp.getData());
+                    posFemale=posFemale+2;
+                }
+                temp = temp.getNext();
+            }
+            this.head= listCopy.getHead();
+        }
     }
 
     public void updateInPos(int pos, Kid kid) {
@@ -86,13 +106,13 @@ public class ListSE {
     }
 
     public void deleteInPos(int pos) throws KidsException {
-        if (pos < 0 || pos > size) {
+        if (pos < 0 || pos > this.size) {
             throw new KidsException("Fuera de rango");
         }
         if (pos == 0) {
-            head = head.getNext();
+            this.head = this.head.getNext();
         } else {
-            Node temp = head;
+            Node temp = this.head;
             int cont = 0;
 
             while (cont < pos - 1) {
@@ -103,7 +123,7 @@ public class ListSE {
             temp.setNext(temp.getNext().getNext());
         }
 
-        size--;
+        this.size--;
     }
 
 
@@ -131,11 +151,24 @@ public class ListSE {
         }
     }
 
-    public void deleteById(String id){
+    public void deleteById(String id) throws KidsException{
         if(this.head==null){
-
+            throw new KidsException("Lista vacia");
+        } else if (this.head.getData().getId().equals(id)) {
+            //Nueva cabeza
+            this.head = this.head.getNext();
+            this.size--;
+        }
+        else{
+            Node temp = this.head;
+            while(temp!=null) {
+                if (temp.getNext().getData().getId().equals(id)) {
+                    temp.setNext(temp.getNext().getNext());
+                }
+                temp = temp.getNext();
+            }
+            this.size--;
         }
     }
-
 
 }
