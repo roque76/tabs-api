@@ -1,6 +1,7 @@
 package com.tabs.tabsapi.controller;
 
 import com.tabs.tabsapi.controller.dto.ResponseDTO;
+import com.tabs.tabsapi.exceptions.KidsException;
 import com.tabs.tabsapi.model.Kid;
 import com.tabs.tabsapi.service.ListSEService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +107,27 @@ public class ListSEController {
     public ResponseEntity<ResponseDTO> updateInPos(@PathVariable byte pos, @RequestBody Kid kid){
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
                 listSEService.updateInPos(pos,kid),null),HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/cityreport")
+    public ResponseEntity<ResponseDTO> cityReport(){
+        Object output = null;
+        try {
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
+                    listSEService.cityReport(),null),HttpStatus.OK);
+        } catch (KidsException e) {
+            List<String> errors = new ArrayList<>();
+            errors.add(e.getMessage());
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.NO_CONTENT.value(),
+                    null,errors),HttpStatus.OK);
+
+        }
+    }
+
+    @GetMapping(path="/test")
+    public ResponseEntity<ResponseDTO> getCities(){
+        return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
+                listSEService.getCities(),null),HttpStatus.OK);
     }
 
 }

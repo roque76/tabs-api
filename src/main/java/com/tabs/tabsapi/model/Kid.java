@@ -10,4 +10,5 @@ public class Kid {
     private String name;
     private String gender;
     private byte age;
+    private String city;
 }
