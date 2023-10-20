@@ -108,14 +108,14 @@ public class ListSE {
     }
 
     public void deleteInPos(int pos) throws KidsException {
-        if (pos < 0 || pos > this.size) {
+        if (pos <= 0 || pos > this.size) {
             throw new KidsException("Fuera de rango");
         }
-        if (pos == 0) {
+        if (pos == 1) {
             this.head = this.head.getNext();
         } else {
             Node temp = this.head;
-            int cont = 0;
+            int cont = 1;
 
             while (cont < pos - 1) {
                 temp = temp.getNext();
@@ -132,11 +132,9 @@ public class ListSE {
     public void insertInPos(int pos, Kid kid) {
         if (pos == 1) {
             this.addToStart(kid);
-            this.size++;
 
         } else if (pos > this.size) {
             this.addKidToFinal(kid);
-            this.size++;
 
         } else if (pos<=this.size) {
             Node temp = this.head;
@@ -193,8 +191,6 @@ public class ListSE {
             throw new KidsException("Lista vacía");
         } else {
             List<String>  cities = this.getCities();
-
-            List<DataStructureDTO> cityReport = new ArrayList<>();
 
             List<DataStructureDTO> cities_report = new ArrayList<>();
 
