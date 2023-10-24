@@ -55,4 +55,12 @@ public class ListDEService {
         kids.invertEdges();
         return "Invertidos";
     }
+    public String intercalateByGender(){
+        try {
+            kids.intercalateByGender();
+            return "Intercalados";
+        } catch (KidsException e) {
+            return e.getMessage();
+        }
+    }
 }

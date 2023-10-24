@@ -101,4 +101,28 @@ public class ListDE {
             this.head.setData(lastKid);
         }
     }
+    public void intercalateByGender() throws KidsException{
+        if(this.head == null){
+            throw new KidsException("Lista vacia");
+        } else if (this.head.getNext()==null) {
+            throw new KidsException("Insuficientes elementos");
+        }
+        else{
+            ListDE listCopy = new ListDE();
+            NodeDE temp = this.head;
+            int posMale = 1;
+            int posFemale = 2;
+            while(temp!= null){
+                if(temp.getData().getGender().equals("Male")){
+                    listCopy.insertInPos(posMale,temp.getData());
+                    posMale = posMale+2;
+                } else if (temp.getData().getGender().equals("Female")) {
+                    listCopy.insertInPos(posFemale,temp.getData());
+                    posFemale=posFemale+2;
+                }
+                temp = temp.getNext();
+            }
+            this.head= listCopy.getHead();
+        }
+    }
 }

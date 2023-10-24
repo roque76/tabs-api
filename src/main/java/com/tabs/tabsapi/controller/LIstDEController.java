@@ -56,4 +56,18 @@ public class LIstDEController {
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
                 listDEService.invertEdges(),null),HttpStatus.OK);
     }
+    @GetMapping(path="/intercalatebygender")
+    public ResponseEntity<ResponseDTO> intercalateByGender(){
+        String output = listDEService.intercalateByGender();
+        if(output.equals("Lista vacia")||output.equals("Insuficientes elementos")){
+            List<String> errors = new ArrayList<>();
+            errors.add(output);
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.BAD_REQUEST.value(),
+                    null,errors),HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
+                    output,null),HttpStatus.OK);
+        }
+    }
 }
