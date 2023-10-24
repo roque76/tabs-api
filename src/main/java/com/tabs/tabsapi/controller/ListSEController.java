@@ -4,11 +4,14 @@ import com.tabs.tabsapi.controller.dto.ResponseDTO;
 import com.tabs.tabsapi.exceptions.KidsException;
 import com.tabs.tabsapi.model.Kid;
 import com.tabs.tabsapi.service.ListSEService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -28,19 +31,19 @@ public class ListSEController {
     }
 
     @PostMapping(path="/addtofinal")
-    public ResponseEntity<ResponseDTO> addToFinal(@RequestBody Kid kid){
+    public ResponseEntity<ResponseDTO> addToFinal(@Valid @RequestBody Kid kid){
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
                 listSEService.addToEnd(kid),null),HttpStatus.OK);
     }
 
     @PostMapping(path="/addtostart")
-    public ResponseEntity<ResponseDTO> addToStart(@RequestBody Kid kid){
+    public ResponseEntity<ResponseDTO> addToStart(@Valid @RequestBody Kid kid){
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
                 listSEService.addToStart(kid),null),HttpStatus.OK);
     }
 
     @PostMapping(path = "insertinpos/{pos}")
-    public ResponseEntity<ResponseDTO> insertInPos(@PathVariable int pos,@RequestBody Kid kid){
+    public ResponseEntity<ResponseDTO> insertInPos(@PathVariable int pos,@Valid @RequestBody Kid kid){
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
                 listSEService.insertInPos(pos,kid),null),HttpStatus.OK);
     }
@@ -104,7 +107,7 @@ public class ListSEController {
     }
 
     @PutMapping(path = "/updateinpos/{pos}")
-    public ResponseEntity<ResponseDTO> updateInPos(@PathVariable byte pos, @RequestBody Kid kid){
+    public ResponseEntity<ResponseDTO> updateInPos(@PathVariable byte pos,@Valid @RequestBody Kid kid){
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
                 listSEService.updateInPos(pos,kid),null),HttpStatus.OK);
     }
@@ -128,6 +131,15 @@ public class ListSEController {
     public ResponseEntity<ResponseDTO> getCities(){
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
                 listSEService.getCities(),null),HttpStatus.OK);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ResponseDTO> handleValidation(MethodArgumentNotValidException exception){
+        List<String> errors = exception.getBindingResult().getFieldErrors().stream()
+                .map(FieldError::getDefaultMessage).toList();
+
+        return new ResponseEntity<>(new ResponseDTO(HttpStatus.BAD_REQUEST.value(),
+                null,errors),HttpStatus.OK);
     }
 
 }

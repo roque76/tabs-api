@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class ListSE {
     private Node head;
-    private int size;
+    private int size= 0;
 
 
     public void addKidToFinal(Kid newkid) {
@@ -176,7 +176,7 @@ public class ListSE {
         List<String> cities = new ArrayList<>();
 
         while (temp != null) {
-            String city = temp.getData().getCity();
+            String city = temp.getData().getCity().getName();
             if (!cities.contains(city)) {
                 cities.add(city);
             }
@@ -200,7 +200,7 @@ public class ListSE {
                 int female_count =0;
                Node temp = this.head;
                while(temp!=null){
-                   if(temp.getData().getCity().equals(city)){
+                   if(temp.getData().getCity().getName().equals(city)){
                        System.out.println("------");
                        System.out.println(temp.getData());
                        System.out.println("----");
