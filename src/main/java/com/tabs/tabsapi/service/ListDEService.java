@@ -63,4 +63,28 @@ public class ListDEService {
             return e.getMessage();
         }
     }
+    public String deleteById(String id){
+        try {
+            kids.deleteById(id);
+            return "Eliminado";
+        } catch (KidsException e) {
+            return e.getMessage();
+        }
+    }
+    public String deleteInPos(int pos){
+        try {
+            kids.deleteInPos(pos);
+            return "Eliminado";
+        } catch (KidsException e) {
+            return e.getMessage();
+        }
+    }
+    public String deleteKamikaze(int pos){
+        try {
+            kids.deleteKamikaze(pos);
+            return "Kamikazeeeee";
+        } catch (KidsException e) {
+            return e.getMessage();
+        }
+    }
 }

@@ -70,4 +70,47 @@ public class LIstDEController {
                     output,null),HttpStatus.OK);
         }
     }
+    @DeleteMapping (path="/deletebyid/{id}")
+    public ResponseEntity<ResponseDTO> deleteById(@PathVariable String id){
+        String output = listDEService.deleteById(id);
+        if(output.equals("Eliminado")){
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
+                    output,null),HttpStatus.OK);
+        }
+        else{
+            List<String> errors = new ArrayList<>();
+            errors.add(output);
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.BAD_REQUEST.value(),
+                    null,errors),HttpStatus.OK);
+        }
+    }
+    @DeleteMapping(path="/deletebypos/{pos}")
+    public ResponseEntity<ResponseDTO> deleteByPos(@PathVariable int pos){
+        String output = listDEService.deleteInPos(pos);
+        if(output.equals("Eliminado")){
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
+                    output,null),HttpStatus.OK);
+        }
+        else{
+            List<String> errors = new ArrayList<>();
+            errors.add(output);
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.BAD_REQUEST.value(),
+                    null,errors),HttpStatus.OK);
+        }
+
+    }
+    @DeleteMapping(path="/deletekamikaze/{pos}")
+    public ResponseEntity<ResponseDTO> deleteKamikaze(@PathVariable int pos){
+        String output = listDEService.deleteKamikaze(pos);
+        if(output.equals("Kamikazeeeee")){
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
+                    output,null),HttpStatus.OK);
+        }
+        else {
+            List<String> errors = new ArrayList<>();
+            errors.add(output);
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.BAD_REQUEST.value(),
+                    null,errors),HttpStatus.OK);
+        }
+    }
 }
