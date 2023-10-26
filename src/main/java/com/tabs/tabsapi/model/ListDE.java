@@ -1,5 +1,6 @@
 package com.tabs.tabsapi.model;
 
+import com.tabs.tabsapi.controller.dto.*;
 import com.tabs.tabsapi.exceptions.KidsException;
 import lombok.Data;
 
@@ -141,8 +142,13 @@ public class ListDE {
             while(temp!=null) {
                 if (temp.getData().getId().equals(id)) {
                     NodeDE previous = temp.getPrevious();
+                    temp.setPrevious(null);
                     previous.setNext(temp.getNext());
-                    temp.getNext().setPrevious(previous);
+                    if(previous.getNext()!=null){
+                        previous.getNext().setPrevious(previous);
+                        System.out.println(previous.getNext().getPrevious().getData());
+                    }
+                    break;
                 }
                 temp = temp.getNext();
             }
@@ -164,7 +170,6 @@ public class ListDE {
                 temp = temp.getNext();
                 cont++;
             }
-
 
             temp.getNext().setPrevious(null);
             temp.setNext(temp.getNext().getNext());
@@ -190,8 +195,94 @@ public class ListDE {
             NodeDE previous = temp.getPrevious();
             temp.setPrevious(null);
             previous.setNext(temp.getNext());
+            if(previous.getNext()!=null){
+                previous.getNext().setPrevious(previous);
+                System.out.println(previous.getNext().getPrevious().getData());
+            }
+
         }
 
         this.size--;
     }
+
+    public List<String> getCities() {
+        NodeDE temp = this.head;
+        List<String> cities = new ArrayList<>();
+
+        while (temp != null) {
+            String city = temp.getData().getCity().getName();
+            if (!cities.contains(city)) {
+                cities.add(city);
+            }
+            temp = temp.getNext();
+        }
+
+        return cities;
+    }
+
+    public List<DataStructureDEDTO> cityReport() throws KidsException{
+        if(this.head==null){
+            throw new KidsException("Lista vacía");
+        } else {
+            List<String>  cities = this.getCities();
+
+            List<DataStructureDEDTO> cities_report = new ArrayList<>();
+
+            for(String city :cities){
+                int maleCount=0;
+                int femaleCount =0;
+                int totalBrotherCount=0;
+                int oneToTen=0;
+                int passTen=0;
+                NodeDE temp = this.head;
+                while(temp!=null){
+                    if(temp.getData().getCity().getName().equals(city)){
+                        System.out.println("------");
+                        System.out.println(temp.getData());
+                        System.out.println("----");
+                        System.out.println(city);
+                        if(temp.getData().getBrothers()>0){
+                            totalBrotherCount++;
+                            if(temp.getData().getAge()<10){
+                                oneToTen++;
+                                if(temp.getData().getGender().equals("Male")){
+                                    maleCount++;
+                                }
+                                if(temp.getData().getGender().equals("Female")){
+                                    femaleCount++;
+                                }
+                            }
+                            else{
+                                passTen++;
+                                if(temp.getData().getGender().equals("Male")){
+                                    maleCount++;
+                                }
+                                if(temp.getData().getGender().equals("Female")){
+                                    femaleCount++;
+                                }
+
+                            }
+                            // Set brothers objects
+                            List<BrothersStructureDEDTO> brothers = new ArrayList<>();
+                            brothers.add(new BrothersStructureDEDTO("One to ten",oneToTen));
+                            brothers.add(new BrothersStructureDEDTO("Pass ten",passTen));
+                        }
+
+                        System.out.println("New total count of brothers in"+city+"-----"+totalBrotherCount);
+                    }
+
+                    temp = temp.getNext();
+                }
+
+                List<GenderStructureDEDTO> genders =new ArrayList<>();
+                genders.add(new GenderStructureDEDTO("Male"))
+
+            }
+
+
+
+            return cities_report;
+        }
+    }
+
 }

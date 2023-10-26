@@ -20,13 +20,13 @@ public class ListSEService {
         // simular que lei un archivo o una base de datos
         kids = new ListSE();
         kids.addKidToFinal(new Kid("1005085752","Valeria Osorio"
-                ,"Female", (byte) 20,new City("Cartago","52694")));
+                ,"Female", (byte) 20,new City("Cartago","52694"),4));
         kids.addKidToFinal(new Kid("356373763","Jhair Torres"
-                ,"Male", (byte) 18,new City("Mocoa","86001")));
+                ,"Male", (byte) 18,new City("Mocoa","86001"),1));
         kids.addKidToFinal(new Kid("4554544554","Sergio Núñez"
-                ,"Male", (byte) 19,new City("Pitalito","41551")));
+                ,"Male", (byte) 19,new City("Pitalito","41551"),3));
         kids.addKidToFinal(new Kid("1056122169","John Jaime Madrid",
-                "Male",(byte)18,new City("Manizales","17001")));
+                "Male",(byte)18,new City("Manizales","17001"),2));
 
     }
     public String invert(){

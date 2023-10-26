@@ -19,4 +19,5 @@ public class Kid {
     private byte age;
     @Valid
     private City city;
+    private int brothers;
 }
