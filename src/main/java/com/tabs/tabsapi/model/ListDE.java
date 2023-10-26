@@ -226,62 +226,66 @@ public class ListDE {
         } else {
             List<String>  cities = this.getCities();
 
-            List<DataStructureDEDTO> cities_report = new ArrayList<>();
+            List<DataStructureDEDTO> finalReport = new ArrayList<>();
 
             for(String city :cities){
                 int maleCount=0;
                 int femaleCount =0;
-                int totalBrotherCount=0;
-                int oneToTen=0;
-                int passTen=0;
+                int oneToTenMale=0;
+                int passTenMale=0;
+                int oneToTenFemale=0;
+                int passTenFemale=0;
                 NodeDE temp = this.head;
                 while(temp!=null){
+
                     if(temp.getData().getCity().getName().equals(city)){
-                        System.out.println("------");
-                        System.out.println(temp.getData());
-                        System.out.println("----");
-                        System.out.println(city);
-                        if(temp.getData().getBrothers()>0){
-                            totalBrotherCount++;
-                            if(temp.getData().getAge()<10){
-                                oneToTen++;
-                                if(temp.getData().getGender().equals("Male")){
-                                    maleCount++;
-                                }
-                                if(temp.getData().getGender().equals("Female")){
-                                    femaleCount++;
-                                }
-                            }
-                            else{
-                                passTen++;
-                                if(temp.getData().getGender().equals("Male")){
-                                    maleCount++;
-                                }
-                                if(temp.getData().getGender().equals("Female")){
-                                    femaleCount++;
-                                }
 
-                            }
-                            // Set brothers objects
-                            List<BrothersStructureDEDTO> brothers = new ArrayList<>();
-                            brothers.add(new BrothersStructureDEDTO("One to ten",oneToTen));
-                            brothers.add(new BrothersStructureDEDTO("Pass ten",passTen));
+                        if(temp.getData().getGender().equals("Male")&&
+                                temp.getData().getAge()<10&&temp.getData().getBrothers()>0){
+                            maleCount++;
+                            oneToTenMale++;
+
                         }
+                        if(temp.getData().getGender().equals("Male")&&
+                                temp.getData().getAge()>=10&&temp.getData().getBrothers()>0){
+                            maleCount++;
+                            passTenMale++;
 
-                        System.out.println("New total count of brothers in"+city+"-----"+totalBrotherCount);
+                        }
+                        if(temp.getData().getGender().equals("Female")&&
+                                temp.getData().getAge()<10&&temp.getData().getBrothers()>0){
+                            femaleCount++;
+                            oneToTenFemale++;
+
+                        }
+                        if(temp.getData().getGender().equals("Female")&&
+                                temp.getData().getAge()>=10&&temp.getData().getBrothers()>0){
+                            femaleCount++;
+                            passTenFemale++;
+                        }
                     }
 
                     temp = temp.getNext();
                 }
-
+                //Set lists for gender objects
+                //Set male list
+                List<BrothersStructureDEDTO> brothersMales = new ArrayList<>();
+                brothersMales.add(new BrothersStructureDEDTO("One to ten males",oneToTenMale));
+                brothersMales.add(new BrothersStructureDEDTO("Pass ten males",passTenMale));
+                //Set female list
+                List<BrothersStructureDEDTO> brothersFemales = new ArrayList<>();
+                brothersFemales.add(new BrothersStructureDEDTO("One to ten females",oneToTenFemale));
+                brothersFemales.add(new BrothersStructureDEDTO("Pass to ten females",passTenFemale));
+                //Set genders list & objects
                 List<GenderStructureDEDTO> genders =new ArrayList<>();
-                genders.add(new GenderStructureDEDTO("Male"))
+                genders.add(new GenderStructureDEDTO("Male",brothersMales,maleCount));
+                genders.add(new GenderStructureDEDTO("Female",brothersFemales,femaleCount));
+                // Objeto para final report
+                finalReport.add(new DataStructureDEDTO(city,genders));
 
             }
 
-
-
-            return cities_report;
+            return finalReport;
         }
     }
 

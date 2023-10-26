@@ -1,5 +1,6 @@
 package com.tabs.tabsapi.service;
 
+import com.tabs.tabsapi.controller.dto.DataStructureDEDTO;
 import com.tabs.tabsapi.exceptions.KidsException;
 import com.tabs.tabsapi.model.City;
 import com.tabs.tabsapi.model.Kid;
@@ -85,6 +86,13 @@ public class ListDEService {
             return "Kamikazeeeee";
         } catch (KidsException e) {
             return e.getMessage();
+        }
+    }
+    public List<DataStructureDEDTO> cityReportDE () throws KidsException{
+        try {
+            return kids.cityReport();
+        } catch (KidsException e) {
+            throw new KidsException(e.getMessage());
         }
     }
 }

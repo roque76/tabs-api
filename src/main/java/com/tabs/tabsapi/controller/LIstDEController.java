@@ -113,4 +113,17 @@ public class LIstDEController {
                     null,errors),HttpStatus.OK);
         }
     }
+    @GetMapping(path="/cityreport")
+    public ResponseEntity<ResponseDTO> getReport(){
+        try {
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
+                    listDEService.cityReportDE(),null),HttpStatus.OK);
+        } catch (KidsException e) {
+            List<String> errors = new ArrayList<>();
+            errors.add(e.getMessage());
+
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.BAD_REQUEST.value(),
+                    null,errors),HttpStatus.OK);
+        }
+    }
 }
